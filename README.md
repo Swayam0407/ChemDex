@@ -103,4 +103,11 @@ This completes the initial project setup. The next tasks will involve:
 3. Creating Angular components and services
 4. Building the user interface
 
-Refer to the task list in `.kiro/specs/chemical-compound-manager/tasks.md` for detailed implementation steps.
+## Screenshots
+<img width="1680" height="929" alt="Screenshot 2025-10-18 at 1 18 43 AM" src="https://github.com/user-attachments/assets/d0e68c01-4d46-43d3-a2c3-de758552ad68" />
+
+<img width="1680" height="931" alt="Screenshot 2025-10-18 at 1 19 00 AM" src="https://github.com/user-attachments/assets/4944002d-bffd-4358-9924-51ddd30ab60d" />
+
+<img width="1680" height="930" alt="Screenshot 2025-10-18 at 1 20 33 AM" src="https://github.com/user-attachments/assets/1286640d-8e40-42ba-960b-9e27f8d11260" />
+
+<img width="1680" height="930" alt="Screenshot 2025-10-18 at 1 20 47 AM" src="https://github.com/user-attachments/assets/dbe49dd4-58b6-4d4e-bb2b-1de53239e96c" />
