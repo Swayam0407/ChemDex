@@ -65,8 +65,8 @@ export class AuthService {
     private http: HttpClient,
     private router: Router
   ) {
-    // Check token validity on service initialization
-    this.validateStoredToken();
+    // Don't validate token in constructor to avoid circular dependency
+    // Token validation will happen on first authenticated request
   }
 
   /**
@@ -225,8 +225,9 @@ export class AuthService {
 
   /**
    * Validate stored token by making a profile request
+   * This method can be called manually when needed
    */
-  private validateStoredToken(): void {
+  validateStoredToken(): void {
     if (this.hasValidToken()) {
       this.getProfile().subscribe({
         next: () => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, timer } from 'rxjs';
-import { catchError, retryWhen, mergeMap } from 'rxjs/operators';
+import { catchError, retry, delay } from 'rxjs/operators';
 import { NotificationService } from '../services/notification.service';
 
 export interface ErrorDetails {
@@ -20,32 +20,36 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      // Retry failed requests (except for certain status codes)
-      retryWhen(errors =>
-        errors.pipe(
-          mergeMap((error: HttpErrorResponse, retryCount: number) => {
-            // Only retry on network errors or 5xx server errors
-            if (this.shouldRetry(req) && this.isRetryableError(error) && retryCount < 2) {
-              return timer(1000 * (retryCount + 1)); // Exponential backoff
-            }
-            return throwError(() => error);
-          })
-        )
-      ),
       catchError((error: HttpErrorResponse) => {
-        const errorDetails = this.processError(error, req);
-
-        // Log error for debugging
-        this.logError(errorDetails);
-
-        // Show user notification for certain errors
-        if (this.shouldShowNotification(errorDetails)) {
-          this.showErrorNotification(errorDetails);
+        // Check if we should retry the request
+        if (this.shouldRetry(req) && this.isRetryableError(error)) {
+          // Retry with delay for retryable errors
+          return next.handle(req).pipe(
+            delay(1000),
+            retry(1), // Retry once
+            catchError((retryError: HttpErrorResponse) => {
+              return this.handleError(retryError, req);
+            })
+          );
         }
-
-        return throwError(() => errorDetails);
+        
+        return this.handleError(error, req);
       })
     );
+  }
+
+  private handleError(error: HttpErrorResponse, req: HttpRequest<any>): Observable<never> {
+    const errorDetails = this.processError(error, req);
+
+    // Log error for debugging
+    this.logError(errorDetails);
+
+    // Show user notification for certain errors
+    if (this.shouldShowNotification(errorDetails)) {
+      this.showErrorNotification(errorDetails);
+    }
+
+    return throwError(() => errorDetails);
   }
 
   private processError(error: HttpErrorResponse, req: HttpRequest<any>): ErrorDetails {
