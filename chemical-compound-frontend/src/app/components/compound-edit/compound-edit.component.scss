@@ -475,3 +475,18 @@ mat-form-field {
     transform: none !important;
   }
 }
+/
+/ Add 2px left padding to compound information input fields
+.form-fields {
+  .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      .mat-mdc-form-field-flex {
+        .mat-mdc-form-field-infix {
+          input, textarea {
+            padding-left: 2px;
+          }
+        }
+      }
+    }
+  }
+}

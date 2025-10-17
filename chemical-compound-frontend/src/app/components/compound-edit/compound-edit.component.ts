@@ -281,13 +281,11 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     if (!dateObj || isNaN(dateObj.getTime())) return '';
     
-    // Format as YYYY-MM-DDTHH:mm for datetime-local input
+    // Format as YYYY-MM-DD for date input
     const year = dateObj.getFullYear();
     const month = String(dateObj.getMonth() + 1).padStart(2, '0');
     const day = String(dateObj.getDate()).padStart(2, '0');
-    const hours = String(dateObj.getHours()).padStart(2, '0');
-    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
     
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
+    return `${year}-${month}-${day}`;
   }
 }
