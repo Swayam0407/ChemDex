@@ -30,7 +30,7 @@
                   formControlName="name" 
                   placeholder="Enter compound name"
                   maxlength="255">
-                <mat-hint>2-255 characters</mat-hint>
+
                 <mat-error *ngIf="isFieldInvalid('name')">
                   {{ getFieldError('name') }}
                 </mat-error>
@@ -44,7 +44,7 @@
                   formControlName="image" 
                   placeholder="https://example.com/image.jpg"
                   type="url">
-                <mat-hint>Valid image URL (jpg, jpeg, png, gif, webp)</mat-hint>
+
                 <mat-error *ngIf="isFieldInvalid('image')">
                   {{ getFieldError('image') }}
                 </mat-error>
@@ -60,7 +60,7 @@
                   rows="6"
                   maxlength="2000">
                 </textarea>
-                <mat-hint>10-2000 characters</mat-hint>
+
                 <mat-error *ngIf="isFieldInvalid('description')">
                   {{ getFieldError('description') }}
                 </mat-error>
@@ -73,7 +73,7 @@
                   matInput 
                   formControlName="imageAttribution" 
                   type="url">
-                <mat-hint>URL to the image source or attribution page</mat-hint>
+
                 <mat-error *ngIf="isFieldInvalid('imageAttribution')">
                   {{ getFieldError('imageAttribution') }}
                 </mat-error>
@@ -86,7 +86,7 @@
                   matInput 
                   formControlName="dateModified" 
                   type="date">
-                <mat-hint>When this compound data was last modified</mat-hint>
+
                 <mat-error *ngIf="isFieldInvalid('dateModified')">
                   {{ getFieldError('dateModified') }}
                 </mat-error>
