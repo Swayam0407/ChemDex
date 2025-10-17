@@ -395,7 +395,6 @@
         margin: 0;
         white-space: pre-wrap;
         padding: var(--spacing-md);
-        padding-left: calc(var(--spacing-md) + 2px);
         background: var(--neutral-50);
         border-radius: var(--radius-md);
         border-left: 4px solid var(--primary-400);
@@ -406,7 +405,6 @@
         font-weight: var(--font-weight-semibold);
         font-size: var(--font-size-base);
         margin: 0;
-        margin-left: 2px;
         font-family: var(--font-family-mono);
         background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
         padding: var(--spacing-xs) var(--spacing-sm);
@@ -420,14 +418,12 @@
         font-size: var(--font-size-sm);
         margin: 0;
         font-style: italic;
-        padding-left: 2px;
       }
 
       .link-text {
         color: var(--text-secondary);
         font-size: var(--font-size-sm);
         margin: 0;
-        padding-left: 2px;
         
         a {
           color: var(--primary-600);
@@ -436,7 +432,6 @@
           padding: var(--spacing-xs) var(--spacing-sm);
           border-radius: var(--radius-sm);
           display: inline-block;
-          margin-left: 2px;
           
           &:hover {
             color: var(--primary-700);
