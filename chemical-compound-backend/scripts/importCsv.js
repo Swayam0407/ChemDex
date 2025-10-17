@@ -167,12 +167,12 @@ async function seedDatabase(compounds) {
 
 /**
  * Main import function
- * @param {string} csvFilePath - Path to the CSV file (optional, defaults to data/compounds.csv)
+ * @param {string} csvFilePath - Path to the CSV file (optional, defaults to data/nuvcompounds.csv)
  */
 async function importCompoundsFromCsv(csvFilePath = null) {
   try {
     // Default CSV file path
-    const defaultCsvPath = path.join(__dirname, '../data/compounds.csv');
+    const defaultCsvPath = path.join(__dirname, '../data/nuvcompounds.csv');
     const filePath = csvFilePath || defaultCsvPath;
     
     console.log('=== Chemical Compounds CSV Import ===');
