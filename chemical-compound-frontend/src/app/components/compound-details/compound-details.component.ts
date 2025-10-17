@@ -165,6 +165,15 @@ export class CompoundDetailsComponent implements OnInit, OnDestroy {
       this.loadCompound(this.compoundId);
     }
   }
+
+  getDisplayUrl(url: string): string {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.hostname + (urlObj.pathname !== '/' ? urlObj.pathname : '');
+    } catch {
+      return url;
+    }
+  }
 }
 
 // Admin Only Dialog Component

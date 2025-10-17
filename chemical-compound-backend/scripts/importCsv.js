@@ -73,7 +73,10 @@ function parseCsvFile(csvFilePath) {
         const compound = {
           name: row.name ? row.name.trim() : '',
           image: row.image ? row.image.trim() : '',
-          description: row.description ? row.description.trim() : null
+          description: row.description ? row.description.trim() : null,
+          imageSource: row.imageSource ? row.imageSource.trim() : null,
+          imageAttribution: row.imageAttribution ? row.imageAttribution.trim() : null,
+          dateModified: row.dateModified ? new Date(row.dateModified) : null
         };
         
         // Validate compound data

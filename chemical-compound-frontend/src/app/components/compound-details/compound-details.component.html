@@ -98,6 +98,20 @@
               <h3>Last Updated</h3>
               <p class="date-text">{{ compound.updatedAt | date:'medium' }}</p>
             </div>
+
+            <div class="detail-item" *ngIf="compound.imageAttribution">
+              <h3>Image Source</h3>
+              <p class="link-text">
+                <a [href]="compound.imageAttribution" target="_blank" rel="noopener noreferrer">
+                  {{ getDisplayUrl(compound.imageAttribution) }}
+                </a>
+              </p>
+            </div>
+
+            <div class="detail-item" *ngIf="compound.dateModified">
+              <h3>Data Modified</h3>
+              <p class="date-text">{{ compound.dateModified | date:'medium' }}</p>
+            </div>
           </mat-card-content>
         </div>
       </div>

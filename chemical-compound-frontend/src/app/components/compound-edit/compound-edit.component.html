@@ -65,6 +65,36 @@
                   {{ getFieldError('description') }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Image Attribution Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Image Attribution URL (Optional)</mat-label>
+                <input 
+                  matInput 
+                  formControlName="imageAttribution" 
+                  placeholder="https://source.com/attribution"
+                  type="url">
+                <mat-hint>URL to the image source or attribution page</mat-hint>
+                <mat-error *ngIf="isFieldInvalid('imageAttribution')">
+                  {{ getFieldError('imageAttribution') }}
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Date Modified Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date Modified (Optional)</mat-label>
+                <input 
+                  matInput 
+                  formControlName="dateModified" 
+                  [matDatepicker]="picker"
+                  placeholder="Select date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-hint>When this compound data was last modified</mat-hint>
+                <mat-error *ngIf="isFieldInvalid('dateModified')">
+                  {{ getFieldError('dateModified') }}
+                </mat-error>
+              </mat-form-field>
             </mat-card-content>
           </mat-card>
         </div>

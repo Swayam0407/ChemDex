@@ -419,6 +419,33 @@
         margin: 0;
         font-style: italic;
       }
+
+      .link-text {
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+        margin: 0;
+        
+        a {
+          color: var(--primary-600);
+          text-decoration: none;
+          transition: all var(--transition-fast);
+          padding: var(--spacing-xs) var(--spacing-sm);
+          border-radius: var(--radius-sm);
+          display: inline-block;
+          
+          &:hover {
+            color: var(--primary-700);
+            background-color: var(--primary-50);
+            text-decoration: underline;
+            transform: translateX(2px);
+          }
+          
+          &:focus {
+            outline: 2px solid var(--primary-400);
+            outline-offset: 2px;
+          }
+        }
+      }
     }
   }
 

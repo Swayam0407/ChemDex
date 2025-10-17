@@ -3,6 +3,9 @@ export interface Compound {
   name: string;
   image: string;
   description: string;
+  imageSource?: string;
+  imageAttribution?: string;
+  dateModified?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -34,6 +37,9 @@ export interface UpdateCompoundRequest {
   name?: string;
   image?: string;
   description?: string;
+  imageSource?: string;
+  imageAttribution?: string;
+  dateModified?: Date;
 }
 
 export interface ApiError {

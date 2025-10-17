@@ -8,6 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -26,7 +28,9 @@ import { Compound, UpdateCompoundRequest } from '../../models/compound.interface
     MatCardModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './compound-edit.component.html',
   styleUrl: './compound-edit.component.scss'
@@ -78,7 +82,11 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(10),
         Validators.maxLength(2000)
-      ]]
+      ]],
+      imageAttribution: ['', [
+        Validators.pattern(/^https?:\/\/.+/)
+      ]],
+      dateModified: ['']
     });
   }
 
@@ -123,7 +131,9 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
       this.editForm.patchValue({
         name: this.compound.name,
         image: this.compound.image,
-        description: this.compound.description
+        description: this.compound.description,
+        imageAttribution: this.compound.imageAttribution || '',
+        dateModified: this.compound.dateModified ? new Date(this.compound.dateModified) : null
       });
       this.imagePreviewUrl = this.compound.image;
     }
@@ -163,7 +173,9 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
       const updateData: UpdateCompoundRequest = {
         name: this.editForm.value.name.trim(),
         image: this.editForm.value.image.trim(),
-        description: this.editForm.value.description.trim()
+        description: this.editForm.value.description.trim(),
+        imageAttribution: this.editForm.value.imageAttribution?.trim() || undefined,
+        dateModified: this.editForm.value.dateModified || undefined
       };
 
       this.compoundService.updateCompound(this.compoundId, updateData)
@@ -247,7 +259,9 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
     const displayNames: { [key: string]: string } = {
       name: 'Name',
       image: 'Image URL',
-      description: 'Description'
+      description: 'Description',
+      imageAttribution: 'Image Attribution URL',
+      dateModified: 'Date Modified'
     };
     return displayNames[fieldName] || fieldName;
   }
