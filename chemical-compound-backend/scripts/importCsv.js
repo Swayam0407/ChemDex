@@ -69,13 +69,13 @@ function parseCsvFile(csvFilePath) {
       .on('data', (row) => {
         rowIndex++;
         
-        // Clean and prepare compound data
+        // Clean and prepare compound data - handle different column name formats
         const compound = {
-          name: row.name ? row.name.trim() : '',
-          image: row.image ? row.image.trim() : '',
-          description: row.description ? row.description.trim() : null,
+          name: (row.name || row.CompoundName) ? (row.name || row.CompoundName).trim() : '',
+          image: (row.image || row.strImageSource) ? (row.image || row.strImageSource).trim() : '',
+          description: (row.description || row.CompounrDescription) ? (row.description || row.CompounrDescription).trim() : null,
           imageSource: row.imageSource ? row.imageSource.trim() : null,
-          imageAttribution: row.imageAttribution ? row.imageAttribution.trim() : null,
+          imageAttribution: (row.imageAttribution || row.strImageAttribution) ? (row.imageAttribution || row.strImageAttribution).trim() : null,
           dateModified: row.dateModified ? new Date(row.dateModified) : null
         };
         
@@ -134,7 +134,8 @@ async function seedDatabase(compounds) {
       try {
         const batchResults = await Compound.bulkCreate(batch, {
           validate: true,
-          returning: true
+          returning: true,
+          fields: ['name', 'image', 'description', 'imageSource', 'imageAttribution', 'dateModified']
         });
         
         createdCompounds.push(...batchResults);

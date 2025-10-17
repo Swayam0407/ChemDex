@@ -25,6 +25,9 @@ class Compound extends Model {
       name: values.name,
       image: values.image,
       description: values.description,
+      imageSource: values.image_source,
+      imageAttribution: values.image_attribution,
+      dateModified: values.date_modified,
       createdAt: values.created_at,
       updatedAt: values.updated_at
     };
@@ -76,6 +79,33 @@ Compound.init({
         msg: 'Description cannot exceed 65535 characters'
       }
     }
+  },
+  imageSource: {
+    type: DataTypes.STRING(500),
+    allowNull: true,
+    field: 'image_source',
+    validate: {
+      len: {
+        args: [0, 500],
+        msg: 'Image source URL must be between 0 and 500 characters'
+      }
+    }
+  },
+  imageAttribution: {
+    type: DataTypes.STRING(500),
+    allowNull: true,
+    field: 'image_attribution',
+    validate: {
+      len: {
+        args: [0, 500],
+        msg: 'Image attribution URL must be between 0 and 500 characters'
+      }
+    }
+  },
+  dateModified: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    field: 'date_modified'
   }
 }, {
   sequelize,
