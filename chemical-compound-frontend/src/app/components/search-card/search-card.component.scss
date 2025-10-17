@@ -1,0 +1,104 @@
+.search-card {
+  margin-bottom: 1.5rem;
+  background: transparent;
+
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+
+    .search-field {
+      width: 50%;
+      max-width: 400px;
+
+      // Enhanced box appearance
+      .mdc-notched-outline {
+        border-color: #e0e0e0;
+        border-width: 2px;
+      }
+
+      &.mat-focused .mdc-notched-outline {
+        border-color: var(--mdc-theme-primary, #1976d2);
+        border-width: 2px;
+      }
+
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+
+      // Input field styling
+      input {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+
+      // Placeholder text styling
+      input::placeholder {
+        font-size: 0.875rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      input::-webkit-input-placeholder {
+        font-size: 0.875rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      input::-moz-placeholder {
+        font-size: 0.875rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      .search-button {
+        color: var(--mdc-theme-primary, #1976d2);
+
+        &:hover:not([disabled]) {
+          background-color: rgba(25, 118, 210, 0.04);
+        }
+
+        &[disabled] {
+          color: rgba(0, 0, 0, 0.26);
+        }
+      }
+
+      .clear-button {
+        margin-right: 8px;
+      }
+    }
+
+    .results-info {
+      display: flex;
+      justify-content: center;
+
+      .results-text {
+        color: var(--mdc-theme-on-surface, rgba(0, 0, 0, 0.6));
+        font-size: 0.875rem;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .search-card {
+    margin-bottom: 1rem;
+
+    .search-container {
+      gap: 0.5rem;
+      align-items: center;
+
+      .search-field {
+        width: 80%; // Wider on mobile for better usability
+        max-width: none;
+      }
+
+      .results-info {
+        .results-text {
+          font-size: 0.8rem;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

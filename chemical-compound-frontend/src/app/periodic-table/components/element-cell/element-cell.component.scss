@@ -1,0 +1,150 @@
+.element-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 4px;
+  box-sizing: border-box;
+  position: relative;
+  min-height: 60px;
+  font-family: 'Roboto', sans-serif;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+
+  &:focus {
+    outline: 2px solid #2196f3;
+    outline-offset: 2px;
+  }
+
+  &.highlighted {
+    box-shadow: 0 0 0 3px #2196f3;
+    z-index: 5;
+  }
+
+  &.dimmed {
+    opacity: 0.3;
+    filter: grayscale(50%);
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 3px #ff9800;
+    z-index: 15;
+  }
+
+  .atomic-number {
+    font-size: 10px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .symbol {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .name {
+    font-size: 8px;
+    color: #555;
+    text-align: center;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    min-height: 50px;
+    
+    .atomic-number {
+      font-size: 8px;
+    }
+    
+    .symbol {
+      font-size: 14px;
+    }
+    
+    .name {
+      font-size: 7px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    min-height: 40px;
+    
+    .atomic-number {
+      font-size: 7px;
+    }
+    
+    .symbol {
+      font-size: 12px;
+    }
+    
+    .name {
+      font-size: 6px;
+    }
+  }
+}
+
+// Category-specific styling adjustments for better contrast
+.element-cell {
+  &.category-alkali-metals,
+  &.category-alkaline-earth-metals,
+  &.category-noble-gases {
+    .atomic-number,
+    .symbol,
+    .name {
+      color: #000;
+    }
+  }
+
+  &.category-nonmetals,
+  &.category-halogens {
+    .atomic-number,
+    .symbol,
+    .name {
+      color: #333;
+    }
+  }
+
+  &.category-transition-metals,
+  &.category-metalloids {
+    .atomic-number,
+    .symbol,
+    .name {
+      color: #fff;
+    }
+  }
+
+  &.category-post-transition-metals {
+    .atomic-number,
+    .symbol,
+    .name {
+      color: #000;
+    }
+  }
+
+  &.category-lanthanides,
+  &.category-actinides {
+    .atomic-number,
+    .symbol,
+    .name {
+      color: #000;
+    }
+  }
+}

@@ -1,0 +1,127 @@
+<div class="edit-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading compound data...</p>
+  </div>
+
+  <!-- Edit Form -->
+  <div *ngIf="!isLoading && compound" class="edit-content">
+    <div class="header">
+      <h1>Edit Compound</h1>
+      <p class="subtitle">Update information for "{{ compound.name }}"</p>
+    </div>
+
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+      <div class="form-layout">
+        <!-- Left Column: Form Fields -->
+        <div class="form-fields">
+          <mat-card class="form-card">
+            <mat-card-header>
+              <mat-card-title>Compound Information</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <!-- Name Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Compound Name</mat-label>
+                <input 
+                  matInput 
+                  formControlName="name" 
+                  placeholder="Enter compound name"
+                  maxlength="255">
+                <mat-hint>2-255 characters</mat-hint>
+                <mat-error *ngIf="isFieldInvalid('name')">
+                  {{ getFieldError('name') }}
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Image URL Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Image URL</mat-label>
+                <input 
+                  matInput 
+                  formControlName="image" 
+                  placeholder="https://example.com/image.jpg"
+                  type="url">
+                <mat-hint>Valid image URL (jpg, jpeg, png, gif, webp)</mat-hint>
+                <mat-error *ngIf="isFieldInvalid('image')">
+                  {{ getFieldError('image') }}
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Description Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Description</mat-label>
+                <textarea 
+                  matInput 
+                  formControlName="description" 
+                  placeholder="Enter compound description"
+                  rows="6"
+                  maxlength="2000">
+                </textarea>
+                <mat-hint>10-2000 characters</mat-hint>
+                <mat-error *ngIf="isFieldInvalid('description')">
+                  {{ getFieldError('description') }}
+                </mat-error>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Right Column: Image Preview -->
+        <div class="image-preview-section">
+          <mat-card class="preview-card">
+            <mat-card-header>
+              <mat-card-title>Image Preview</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="image-preview-container">
+                <div *ngIf="imagePreviewUrl && !imageLoadError" class="image-preview">
+                  <img 
+                    [src]="imagePreviewUrl" 
+                    [alt]="editForm.get('name')?.value || 'Compound preview'"
+                    (load)="onImageLoad()"
+                    (error)="onImageError()">
+                </div>
+                
+                <div *ngIf="imageLoadError" class="image-error">
+                  <mat-icon>broken_image</mat-icon>
+                  <p>Failed to load image</p>
+                  <small>Please check the URL and try again</small>
+                </div>
+                
+                <div *ngIf="!imagePreviewUrl" class="image-placeholder">
+                  <mat-icon>image</mat-icon>
+                  <p>No image to preview</p>
+                  <small>Enter a valid image URL to see preview</small>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          mat-stroked-button 
+          (click)="onCancel()"
+          [disabled]="isSaving">
+          Cancel
+        </button>
+        
+        <button 
+          type="submit" 
+          mat-raised-button 
+          [disabled]="editForm.invalid || isSaving">
+          <mat-spinner *ngIf="isSaving" diameter="20"></mat-spinner>
+          <span *ngIf="!isSaving">Save Changes</span>
+          <span *ngIf="isSaving">Saving...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

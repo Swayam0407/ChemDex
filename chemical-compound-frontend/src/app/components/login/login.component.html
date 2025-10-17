@@ -1,0 +1,44 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Log In</h2>
+      <p>Welcome back to ChemDex</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" formControlName="email" class="form-control"
+          [class.is-invalid]="f['email'].invalid && f['email'].touched" placeholder="Enter your email">
+        <div class="invalid-feedback" *ngIf="f['email'].invalid && f['email'].touched">
+          <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+          <div *ngIf="f['email'].errors?.['email']">Please enter a valid email address</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" class="form-control"
+          [class.is-invalid]="f['password'].invalid && f['password'].touched" placeholder="Enter your password">
+        <div class="invalid-feedback" *ngIf="f['password'].invalid && f['password'].touched">
+          <div *ngIf="f['password'].errors?.['required']">Password is required</div>
+          <div *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'Signing In...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>
+        Don't have an account?
+        <button type="button" class="btn-link" (click)="navigateToRegister()">
+          Sign up here
+        </button>
+      </p>
+    </div>
+  </div>
+</div>

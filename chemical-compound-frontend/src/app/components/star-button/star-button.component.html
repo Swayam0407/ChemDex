@@ -1,0 +1,31 @@
+<button
+  mat-icon-button
+  [class]="getButtonClasses()"
+  [disabled]="(buttonState$ | async)?.isLoading"
+  [attr.aria-label]="(buttonState$ | async)?.ariaLabel"
+  [attr.aria-pressed]="(buttonState$ | async)?.isStarred"
+  [matTooltip]="(buttonState$ | async)?.tooltip"
+  matTooltipPosition="above"
+  (click)="onStarClick($event)"
+  (keydown)="onKeyDown($event)"
+  type="button">
+  
+  <!-- Loading spinner -->
+  <mat-spinner 
+    *ngIf="(buttonState$ | async)?.isLoading; else iconTemplate"
+    [diameter]="getSpinnerDiameter()"
+    strokeWidth="2">
+  </mat-spinner>
+  
+  <!-- Star icon template -->
+  <ng-template #iconTemplate>
+    <mat-icon 
+      [style.font-size]="getIconSize()"
+      [style.width]="getIconSize()"
+      [style.height]="getIconSize()"
+      [class.star-filled]="(buttonState$ | async)?.isStarred"
+      [class.star-outline]="!(buttonState$ | async)?.isStarred">
+      {{ (buttonState$ | async)?.icon }}
+    </mat-icon>
+  </ng-template>
+</button>

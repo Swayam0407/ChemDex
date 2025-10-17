@@ -1,0 +1,52 @@
+<mat-card 
+  class="compound-card" 
+  (click)="onCardClick()"
+  [routerLink]="['/compounds', compound.id]">
+  
+  <div class="card-image-container">
+    <img 
+      *ngIf="!imageError && compound.image" 
+      [src]="compound.image" 
+      [alt]="compound.name"
+      class="compound-image"
+      (error)="onImageError()"
+      (load)="onImageLoad()">
+    
+    <div *ngIf="imageError || !compound.image" class="image-placeholder">
+      <mat-icon class="placeholder-icon">science</mat-icon>
+      <span class="placeholder-text">No Image</span>
+    </div>
+    
+    <!-- Star button overlay -->
+    <div [class]="getStarOverlayClasses()">
+      <app-star-button 
+        [compound]="compound" 
+        size="small"
+        (click)="$event.stopPropagation()">
+      </app-star-button>
+    </div>
+  </div>
+
+  <mat-card-content class="card-content">
+    <h3 class="compound-name" [title]="compound.name">{{ compound.name }}</h3>
+    <p class="compound-description" [title]="compound.description">
+      {{ compound.description | slice:0:100 }}{{ compound.description && compound.description.length > 100 ? '...' : '' }}
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <button 
+      mat-button 
+      [routerLink]="['/compounds', compound.id]"
+      (click)="$event.stopPropagation()">
+      <mat-icon>visibility</mat-icon>
+      View Details
+    </button>
+    <button 
+      mat-button 
+      (click)="onEditClick($event)">
+      <mat-icon>edit</mat-icon>
+      Edit
+    </button>
+  </mat-card-actions>
+</mat-card>

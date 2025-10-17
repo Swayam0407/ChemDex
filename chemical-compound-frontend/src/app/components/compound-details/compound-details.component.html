@@ -1,0 +1,118 @@
+<div class="details-container">
+  <!-- Breadcrumb Navigation -->
+  <nav class="breadcrumb">
+    <button mat-button (click)="navigateToGallery()" class="breadcrumb-link">
+      <mat-icon>home</mat-icon>
+      Gallery
+    </button>
+    <mat-icon class="breadcrumb-separator">chevron_right</mat-icon>
+    <span class="breadcrumb-current">
+      {{ compound?.name || 'Compound Details' }}
+    </span>
+  </nav>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading compound details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-card class="error-card">
+      <mat-card-content>
+        <div class="error-content">
+          <mat-icon class="error-icon">error</mat-icon>
+          <h2>Unable to Load Compound</h2>
+          <p>{{ error }}</p>
+          <div class="error-actions">
+            <button mat-raised-button (click)="retryLoad()">
+              <mat-icon>refresh</mat-icon>
+              Try Again
+            </button>
+            <button mat-button (click)="navigateToGallery()">
+              Back to Gallery
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Compound Details -->
+  <div *ngIf="compound && !loading && !error" class="compound-content">
+    <mat-card class="compound-card">
+      <mat-card-header>
+        <div class="header-content">
+          <div class="title-section">
+            <mat-card-title>{{ compound.name }}</mat-card-title>
+            <mat-card-subtitle>Chemical Compound Details</mat-card-subtitle>
+          </div>
+          <div class="star-section">
+            <app-star-button 
+              [compound]="compound" 
+              size="large">
+            </app-star-button>
+          </div>
+        </div>
+      </mat-card-header>
+
+      <div class="compound-body">
+        <!-- Image Section -->
+        <div class="image-section">
+          <div class="image-container">
+            <img 
+              *ngIf="!imageError" 
+              [src]="compound.image" 
+              [alt]="compound.name"
+              (load)="onImageLoad()"
+              (error)="onImageError()"
+              class="compound-image"
+            />
+            <div *ngIf="imageError" class="image-fallback">
+              <mat-icon class="fallback-icon">image_not_supported</mat-icon>
+              <p>Image not available</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="details-section">
+          <mat-card-content>
+            <div class="detail-item">
+              <h3>Description</h3>
+              <p class="description-text">{{ compound.description || 'No description available.' }}</p>
+            </div>
+
+            <div class="detail-item" *ngIf="compound.id">
+              <h3>Compound ID</h3>
+              <p class="compound-id">#{{ compound.id }}</p>
+            </div>
+
+            <div class="detail-item" *ngIf="compound.createdAt">
+              <h3>Created</h3>
+              <p class="date-text">{{ compound.createdAt | date:'medium' }}</p>
+            </div>
+
+            <div class="detail-item" *ngIf="compound.updatedAt">
+              <h3>Last Updated</h3>
+              <p class="date-text">{{ compound.updatedAt | date:'medium' }}</p>
+            </div>
+          </mat-card-content>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <mat-card-actions class="action-buttons">
+        <button mat-raised-button (click)="navigateToEdit()">
+          <mat-icon>edit</mat-icon>
+          Edit Compound
+        </button>
+        <button mat-button (click)="navigateToGallery()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Gallery
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

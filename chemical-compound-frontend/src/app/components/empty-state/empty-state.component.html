@@ -1,0 +1,15 @@
+<div class="empty-container">
+  <mat-icon class="empty-icon">{{ getIcon() }}</mat-icon>
+  <h3 class="empty-title">{{ getTitle() }}</h3>
+  <p class="empty-message">{{ getMessage() }}</p>
+  
+  <button 
+    *ngIf="shouldShowBrowseButton()" 
+    mat-raised-button 
+    color="primary" 
+    (click)="onBrowseAllClick()"
+    class="browse-button">
+    <mat-icon>science</mat-icon>
+    Browse All Compounds
+  </button>
+</div>

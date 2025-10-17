@@ -1,0 +1,80 @@
+<div class="gallery-container">
+  <header class="gallery-header">
+    <h1 class="gallery-title">
+      {{ isStarredView ? 'Starred Compounds' : 'Explore Compounds!' }}
+    </h1>
+    
+    <!-- Search Card -->
+    <app-search-card
+      [searchTerm]="searchTerm"
+      [totalResults]="totalResults"
+      [currentResults]="compounds.length || 0"
+      [loading]="loading"
+      (searchChange)="onSearchChange($event)"
+      (clearSearch)="onClearSearch()">
+    </app-search-card>
+    
+    <!-- Element Filter Display -->
+    <div class="filter-display" *ngIf="hasElementFilter()">
+      <mat-chip-set>
+        <mat-chip class="element-filter-chip" [removable]="true" (removed)="clearElementFilter()">
+          <mat-icon matChipAvatar>filter_list</mat-icon>
+          {{ getElementFilterText() }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Loading compounds...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-icon class="error-icon">{{ getErrorIcon() }}</mat-icon>
+    <h3 class="error-title">{{ getErrorTitle() }}</h3>
+    <p class="error-message">{{ getErrorMessage() }}</p>
+    
+    <div class="error-actions">
+      <button 
+        mat-raised-button 
+        (click)="onRetry()"
+        [disabled]="retryCount >= maxRetries">
+        <mat-icon>refresh</mat-icon>
+        {{ retryCount >= maxRetries ? 'Max Retries Reached' : 'Try Again (' + (maxRetries - retryCount) + ' left)' }}
+      </button>
+      
+      <button mat-button (click)="refreshPage()" class="refresh-button">
+        <mat-icon>refresh</mat-icon>
+        Refresh Page
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <app-empty-state
+    *ngIf="!loading && !error && compounds && compounds.length === 0"
+    [type]="getEmptyStateType()"
+    [searchTerm]="searchTerm"
+    (browseAllClick)="onBrowseAllCompounds()">
+  </app-empty-state>
+
+  <!-- Compounds Grid -->
+  <div *ngIf="!loading && !error && compounds && compounds.length > 0" class="compounds-content">
+    <div class="compounds-grid">
+      <app-compound-card
+        *ngFor="let compound of compounds; trackBy: trackByCompoundId"
+        [compound]="compound"
+        (cardClick)="onCardClick($event)">
+      </app-compound-card>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" *ngIf="getCurrentPaginationState() && getCurrentPaginationState()!.totalPages > 1">
+      <app-pagination></app-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="element-details-modal" tabindex="0">
+  <!-- Modal Header -->
+  <div class="modal-header">
+    <div class="element-symbol-large">
+      {{ element.symbol }}
+    </div>
+    <div class="element-title">
+      <h2>{{ element.name }}</h2>
+      <p class="atomic-number">Atomic Number: {{ element.atomicNumber }}</p>
+    </div>
+    <button mat-icon-button class="close-button" (click)="onClose()" aria-label="Close modal">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Basic Properties -->
+  <mat-card class="properties-card">
+    <mat-card-content>
+      <div class="properties-grid">
+        <div class="property-item">
+          <span class="property-label">Atomic Mass:</span>
+          <span class="property-value">{{ getFormattedAtomicMass() }} u</span>
+        </div>
+        <div class="property-item">
+          <span class="property-label">Period:</span>
+          <span class="property-value">{{ element.period }}</span>
+        </div>
+        <div class="property-item">
+          <span class="property-label">Group:</span>
+          <span class="property-value">{{ element.group }}</span>
+        </div>
+        <div class="property-item">
+          <span class="property-label">Category:</span>
+          <span class="property-value">{{ categoryInfo.name }}</span>
+        </div>
+        <div class="property-item" *ngIf="element.meltingPoint !== undefined">
+          <span class="property-label">Melting Point:</span>
+          <span class="property-value">{{ getFormattedTemperature(element.meltingPoint) }}</span>
+        </div>
+        <div class="property-item" *ngIf="element.boilingPoint !== undefined">
+          <span class="property-label">Boiling Point:</span>
+          <span class="property-value">{{ getFormattedTemperature(element.boilingPoint) }}</span>
+        </div>
+        <div class="property-item" *ngIf="element.density !== undefined">
+          <span class="property-label">Density:</span>
+          <span class="property-value">{{ getFormattedDensity() }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Description -->
+  <mat-card class="description-card" *ngIf="element.description">
+    <mat-card-content>
+      <p class="element-description">{{ element.description }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Modal Actions -->
+  <div class="modal-actions">
+    <button mat-button (click)="onClose()" class="close-action-button">
+      Close
+    </button>
+  </div>
+</div>

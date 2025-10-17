@@ -1,0 +1,398 @@
+.compound-card {
+  cursor: pointer;
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+  background: var(--bg-primary);
+  position: relative;
+  animation: fadeInScale var(--transition-normal) ease-out;
+  
+  // Clean border with subtle gradient
+  border: 1px solid var(--neutral-200);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  
+  // Hover glow effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+      rgba(14, 165, 233, 0.08) 0%, 
+      rgba(3, 105, 161, 0.08) 100%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-glow);
+    border-color: var(--primary-400);
+    background: rgba(255, 255, 255, 0.95);
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(-3px) scale(1.01);
+    transition-duration: var(--transition-fast);
+  }
+  
+  // Focus state for accessibility
+  &:focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+  }
+}
+
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, 
+    var(--primary-50) 0%, 
+    var(--primary-100) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  
+  // Animated background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, 
+      rgba(14, 165, 233, 0.15) 0%, 
+      transparent 70%
+    );
+    animation: rotate 20s linear infinite;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+  
+  .compound-card:hover &::before {
+    opacity: 1;
+  }
+}
+
+.star-button-overlay {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  z-index: 4;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all var(--transition-fast) ease-out;
+  opacity: 0;
+  transform: scale(0.8);
+  
+  // Show on card hover or when starred
+  .compound-card:hover &,
+  .compound-card:focus-within & {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  // Always show if compound is starred (handled by the star button component)
+  // Note: Using class-based approach for better browser compatibility
+  &.starred {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  // Hover effect for the overlay itself
+  &:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
+  
+  // Ensure star button fits properly
+  app-star-button {
+    display: block;
+  }
+}
+
+.compound-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  transition: transform var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+  position: relative;
+
+  .compound-card:hover & {
+    transform: scale(1.05);
+  }
+  
+  // Loading state
+  &.loading {
+    opacity: 0;
+    animation: fadeIn var(--transition-slow) ease-out forwards;
+  }
+}
+
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: var(--spacing-lg);
+  z-index: 3;
+  position: relative;
+
+  .placeholder-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.6;
+    color: var(--primary-400);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .placeholder-text {
+    font-size: var(--font-size-sm);
+    opacity: 0.8;
+    color: var(--text-hint);
+  }
+}
+
+.card-content {
+  flex: 1;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  z-index: 2;
+  position: relative;
+  background: var(--bg-primary);
+}
+
+.compound-name {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+  
+  .compound-card:hover & {
+    color: var(--primary-700);
+  }
+}
+
+.compound-description {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color var(--transition-fast);
+  
+  .compound-card:hover & {
+    color: var(--text-primary);
+  }
+}
+
+.card-actions {
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: space-between;
+  z-index: 2;
+  position: relative;
+  background: var(--bg-primary);
+
+  button {
+    flex: 1;
+    font-size: var(--font-size-xs);
+    border-radius: var(--radius-md) !important;
+    transition: all var(--transition-fast) !important;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent
+      );
+      transition: left var(--transition-normal);
+    }
+    
+    &:hover::before {
+      left: 100%;
+    }
+    
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      margin-right: var(--spacing-xs);
+      transition: transform var(--transition-fast);
+    }
+    
+    &:hover mat-icon {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// ===== ANIMATIONS =====
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ===== LOADING SKELETON =====
+.skeleton-card {
+  .card-image-container {
+    background: var(--skeleton-bg, #f0f0f0);
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+  }
+  
+  .compound-name,
+  .compound-description {
+    background: var(--skeleton-bg, #f0f0f0);
+    color: transparent;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 768px) {
+  .card-image-container {
+    height: 160px;
+  }
+
+  .compound-name {
+    font-size: var(--font-size-base);
+  }
+
+  .compound-description {
+    font-size: var(--font-size-xs);
+  }
+
+  .card-actions {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+
+    button {
+      width: 100%;
+    }
+  }
+  
+  .compound-card:hover {
+    transform: translateY(-3px) scale(1.01);
+  }
+  
+  // Make star button more visible on mobile
+  .star-button-overlay {
+    opacity: 0.8;
+    transform: scale(0.9);
+    
+    &.starred {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .card-image-container {
+    height: 140px;
+  }
+
+  .card-content {
+    padding: var(--spacing-sm);
+  }
+
+  .card-actions {
+    padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
+  }
+  
+  .compound-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  // Always show star button on small screens
+  .star-button-overlay {
+    opacity: 1;
+    transform: scale(1);
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+  }
+}
+
+// ===== ACCESSIBILITY =====
+@media (prefers-reduced-motion: reduce) {
+  .compound-card,
+  .compound-image,
+  .card-image-container::before,
+  .placeholder-icon,
+  .star-button-overlay {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .compound-card:hover {
+    transform: none;
+  }
+  
+  .star-button-overlay:hover {
+    transform: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .star-button-overlay {
+    background: rgba(255, 255, 255, 1);
+    border: 2px solid #000000;
+  }
+}

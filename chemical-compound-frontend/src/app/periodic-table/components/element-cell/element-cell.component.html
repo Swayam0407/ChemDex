@@ -1,0 +1,13 @@
+<div 
+  class="element-cell"
+  [style.background-color]="getCategoryColor()"
+  [style.grid-row]="element.gridPosition.row"
+  [style.grid-column]="element.gridPosition.column"
+  [attr.aria-label]="getAriaLabel()"
+  [attr.tabindex]="0"
+  (click)="onElementClick()">
+  
+  <div class="atomic-number">{{ element.atomicNumber }}</div>
+  <div class="symbol">{{ element.symbol }}</div>
+  <div class="name">{{ element.name }}</div>
+</div>

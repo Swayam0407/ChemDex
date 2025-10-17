@@ -1,0 +1,36 @@
+<div class="search-card">
+    <div class="search-container">
+      <mat-form-field class="search-field" appearance="outline">
+        <mat-label>Search compounds</mat-label>
+        <input 
+          #searchInput
+          matInput 
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchInput($event)"
+          (keypress)="onKeyPress($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+          placeholder="Enter compound name..."
+          [disabled]="loading">
+        <button 
+          matSuffix 
+          mat-icon-button 
+          (click)="onSearchClick()"
+          [disabled]="loading"
+          class="search-button"
+          type="button">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button 
+          *ngIf="searchTerm" 
+          matSuffix 
+          mat-icon-button 
+          (click)="onClearSearch()"
+          [disabled]="loading"
+          class="clear-button">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+</div>

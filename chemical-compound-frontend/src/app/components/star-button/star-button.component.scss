@@ -1,0 +1,143 @@
+.star-button {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  border-radius: 50%;
+  
+  &:hover:not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.04);
+    transform: scale(1.1);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  // Size variants
+  &--small {
+    width: 32px;
+    height: 32px;
+    
+    .mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  &--medium {
+    width: 40px;
+    height: 40px;
+    
+    .mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  &--large {
+    width: 48px;
+    height: 48px;
+    
+    .mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+// Star icon states
+.star-filled {
+  color: #ffd700; // Gold color for filled star
+  animation: starFill 0.3s ease-in-out;
+  
+  &:hover {
+    color: #ffed4e; // Lighter gold on hover
+  }
+}
+
+.star-outline {
+  color: rgba(0, 0, 0, 0.54); // Material Design secondary text color
+  transition: color 0.2s ease-in-out;
+  
+  &:hover {
+    color: #ffd700; // Gold color on hover
+  }
+}
+
+// Animations
+@keyframes starFill {
+  0% {
+    transform: scale(1);
+    color: rgba(0, 0, 0, 0.54);
+  }
+  50% {
+    transform: scale(1.2);
+    color: #ffed4e;
+  }
+  100% {
+    transform: scale(1);
+    color: #ffd700;
+  }
+}
+
+// Loading spinner styling
+.mat-spinner {
+  margin: 0 auto;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .star-filled {
+    color: #000000;
+  }
+  
+  .star-outline {
+    color: #666666;
+    
+    &:hover {
+      color: #000000;
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .star-button {
+    transition: none;
+    
+    &:hover:not(:disabled) {
+      transform: none;
+    }
+  }
+  
+  .star-filled {
+    animation: none;
+  }
+  
+  .star-outline {
+    transition: none;
+  }
+}
+
+// Dark theme support (if implemented in the future)
+@media (prefers-color-scheme: dark) {
+  .star-outline {
+    color: rgba(255, 255, 255, 0.7);
+    
+    &:hover {
+      color: #ffd700;
+    }
+  }
+  
+  .star-button:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}

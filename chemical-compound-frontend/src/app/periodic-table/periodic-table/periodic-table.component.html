@@ -1,0 +1,16 @@
+<div class="periodic-table-container">
+  <div class="periodic-table-header">
+    <h1>Periodic Table of Elements</h1>
+    <p class="element-count">{{ elements.length }} elements</p>
+  </div>
+  
+  <!-- Main Periodic Table Grid -->
+  <div class="periodic-table-grid" role="grid" aria-label="Periodic Table of Chemical Elements">
+    <app-element-cell
+      *ngFor="let element of elements; trackBy: trackByAtomicNumber"
+      [element]="element"
+      (elementClick)="onElementClick($event)"
+      role="gridcell">
+    </app-element-cell>
+  </div>
+</div>

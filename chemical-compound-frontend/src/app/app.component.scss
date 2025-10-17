@@ -1,0 +1,345 @@
+// ===== HEADER STYLES =====
+mat-toolbar {
+  background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-800) 100%) !important;
+  color: white !important;
+  box-shadow: var(--shadow-4);
+  position: relative;
+  overflow: hidden;
+  height: 80px !important; // Increased height
+  min-height: 80px !important;
+  
+  // Enhanced spotlight effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.15), 
+      transparent
+    );
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  
+  // Additional glow effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center top, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+  
+  .toolbar-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .left-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; // Align ChemDex to the left
+  }
+  
+  .center-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-xs); // Add gap between navigation buttons
+  }
+  
+  .auth-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-left: var(--spacing-md);
+  }
+  
+  .user-menu {
+    margin-left: var(--spacing-md);
+  }
+  
+  .user-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+  
+  .register-button {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+  
+
+}
+
+.title {
+  margin-left: var(--spacing-xs); // Further reduced gap between icon and title
+  font-size: var(--font-size-2xl); // Consistent with rest of app
+  font-weight: var(--font-weight-semibold); // Consistent with rest of app
+  font-family: var(--font-family-primary); // Explicit font family
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-fast);
+  letter-spacing: -0.025em;
+  
+  &:hover {
+    transform: scale(1.02);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.main-icon {
+  font-size: 32px !important;
+  width: 32px !important;
+  height: 32px !important;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-fast);
+  
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Spacer no longer needed - using flexbox layout sections
+
+// ===== NAVIGATION BUTTONS =====
+mat-toolbar button {
+  color: white !important;
+  border-radius: var(--radius-md) !important;
+  transition: all var(--transition-fast) !important;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-family-primary) !important; // Consistent font family
+  font-size: var(--font-size-base) !important; // Consistent font size
+  font-weight: var(--font-weight-medium) !important; // Consistent font weight
+  padding: var(--spacing-sm) var(--spacing-md) !important; // Proper padding for clickability
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left var(--transition-fast);
+  }
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-1px);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  mat-icon {
+    margin-right: var(--spacing-sm);
+    transition: transform var(--transition-fast);
+  }
+  
+  &:hover mat-icon {
+    transform: scale(1.1);
+  }
+  
+  .button-text {
+    font-family: var(--font-family-primary) !important; // Ensure Gallery text uses same font
+    font-size: var(--font-size-lg) !important; // Slightly smaller than ChemDex for better balance
+    font-weight: var(--font-weight-medium) !important; // Medium weight for button text
+  }
+  
+  // Special styling for periodic table button
+  &.periodic-table-button {
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: width var(--transition-fast);
+    }
+    
+    &:hover::after {
+      width: 80%;
+    }
+    
+    mat-icon {
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+      border-radius: 4px;
+      padding: 2px;
+    }
+  }
+  
+  // Active navigation state
+  &.active-nav {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &::before {
+      left: 100%;
+    }
+    
+    mat-icon {
+      transform: scale(1.1);
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .button-text {
+      font-weight: var(--font-weight-semibold) !important;
+    }
+    
+    // Active underline for periodic table button
+    &.periodic-table-button::after {
+      width: 80%;
+      background: rgba(255, 255, 255, 0.9);
+    }
+  }
+}
+
+// ===== MAIN CONTENT AREA =====
+.main-content {
+  padding: 0; // Remove padding to eliminate whitespace between navbar and content
+  min-height: calc(100vh - 80px); // Updated for new header height
+  background: var(--bg-secondary);
+  position: relative;
+  animation: fadeIn var(--transition-normal) ease-out;
+  
+  // Subtle background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(14, 165, 233, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(3, 105, 161, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// ===== ANIMATIONS =====
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 768px) {
+  mat-toolbar {
+    height: 70px !important; // Slightly smaller on tablet
+    min-height: 70px !important;
+  }
+  
+  .main-content {
+    padding: 0; // Keep consistent with desktop - no padding
+    min-height: calc(100vh - 70px);
+  }
+  
+  .title {
+    font-size: var(--font-size-xl); // Smaller on tablet but still prominent
+    margin-left: var(--spacing-xs); // Even smaller gap on tablet
+  }
+  
+  .main-icon {
+    font-size: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+  
+  .right-section {
+    gap: var(--spacing-xs); // Smaller gap on tablet
+  }
+  
+  mat-toolbar button {
+    .button-text {
+      font-size: var(--font-size-base) !important; // Smaller on tablet
+      display: none; // Hide text on tablet for space
+    }
+    
+    mat-icon {
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  mat-toolbar {
+    height: 64px !important; // Standard mobile height
+    min-height: 64px !important;
+  }
+  
+  .main-content {
+    padding: 0; // Keep consistent with desktop - no padding
+    min-height: calc(100vh - 64px);
+  }
+  
+  .title {
+    font-size: var(--font-size-lg); // Smaller on mobile but readable
+    margin-left: var(--spacing-xs); // Minimal gap on mobile
+  }
+  
+  mat-toolbar button .button-text {
+    font-size: var(--font-size-sm) !important; // Smaller on mobile
+  }
+  
+  .main-icon {
+    font-size: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+}

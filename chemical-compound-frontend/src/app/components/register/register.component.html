@@ -1,0 +1,95 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h2>Create Account</h2>
+      <p>Join ChemDex</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          [class.is-invalid]="f['username'].invalid && f['username'].touched"
+          placeholder="Choose a username"
+        >
+        <div class="invalid-feedback" *ngIf="f['username'].invalid && f['username'].touched">
+          <div *ngIf="f['username'].errors?.['required']">Username is required</div>
+          <div *ngIf="f['username'].errors?.['minlength']">Username must be at least 3 characters</div>
+          <div *ngIf="f['username'].errors?.['maxlength']">Username must be no more than 50 characters</div>
+          <div *ngIf="f['username'].errors?.['invalidUsername']">Username can only contain letters, numbers, underscores, and hyphens</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="f['email'].invalid && f['email'].touched"
+          placeholder="Enter your email"
+        >
+        <div class="invalid-feedback" *ngIf="f['email'].invalid && f['email'].touched">
+          <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+          <div *ngIf="f['email'].errors?.['email']">Please enter a valid email address</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="f['password'].invalid && f['password'].touched"
+          placeholder="Create a password"
+        >
+        <div class="invalid-feedback" *ngIf="f['password'].invalid && f['password'].touched">
+          <div *ngIf="f['password'].errors?.['required']">Password is required</div>
+          <div *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</div>
+          <div *ngIf="f['password'].errors?.['weakPassword']">Password must contain at least one uppercase letter, one lowercase letter, and one number</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-control"
+          [class.is-invalid]="(f['confirmPassword'].invalid && f['confirmPassword'].touched) || (registerForm.errors?.['passwordMismatch'] && f['confirmPassword'].touched)"
+          placeholder="Confirm your password"
+        >
+        <div class="invalid-feedback" *ngIf="(f['confirmPassword'].invalid && f['confirmPassword'].touched) || (registerForm.errors?.['passwordMismatch'] && f['confirmPassword'].touched)">
+          <div *ngIf="f['confirmPassword'].errors?.['required']">Please confirm your password</div>
+          <div *ngIf="registerForm.errors?.['passwordMismatch']">Passwords do not match</div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'Creating Account...' : 'Create Account' }}
+      </button>
+    </form>
+
+    <div class="register-footer">
+      <p>
+        Already have an account?
+        <button type="button" class="btn-link" (click)="navigateToLogin()">
+          Sign in here
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
