@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -81,7 +81,13 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
         Validators.maxLength(2000)
       ]],
       imageAttribution: ['', [
-        Validators.pattern(/^https?:\/\/.+/)
+        (control: AbstractControl) => {
+          if (!control.value || control.value.trim() === '') {
+            return null; // Valid if empty
+          }
+          const urlPattern = /^https?:\/\/.+/;
+          return urlPattern.test(control.value) ? null : { invalidUrl: true };
+        }
       ]],
       dateModified: ['']
     });
@@ -247,6 +253,9 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
       }
       if (field.errors['pattern']) {
         return 'Please enter a valid image URL (jpg, jpeg, png, gif, webp)';
+      }
+      if (field.errors['invalidUrl']) {
+        return 'Please enter a valid URL starting with http:// or https://';
       }
     }
     return '';
