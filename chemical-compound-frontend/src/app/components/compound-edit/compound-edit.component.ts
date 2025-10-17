@@ -8,8 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -28,9 +27,7 @@ import { Compound, UpdateCompoundRequest } from '../../models/compound.interface
     MatCardModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    MatIconModule
   ],
   templateUrl: './compound-edit.component.html',
   styleUrl: './compound-edit.component.scss'
@@ -133,7 +130,7 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
         image: this.compound.image,
         description: this.compound.description,
         imageAttribution: this.compound.imageAttribution || '',
-        dateModified: this.compound.dateModified ? new Date(this.compound.dateModified) : null
+        dateModified: this.compound.dateModified ? this.formatDateForInput(this.compound.dateModified) : ''
       });
       this.imagePreviewUrl = this.compound.image;
     }
@@ -175,7 +172,7 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
         image: this.editForm.value.image.trim(),
         description: this.editForm.value.description.trim(),
         imageAttribution: this.editForm.value.imageAttribution?.trim() || undefined,
-        dateModified: this.editForm.value.dateModified || undefined
+        dateModified: this.editForm.value.dateModified ? new Date(this.editForm.value.dateModified) : undefined
       };
 
       this.compoundService.updateCompound(this.compoundId, updateData)
@@ -269,5 +266,19 @@ export class CompoundEditComponent implements OnInit, OnDestroy {
   isFieldInvalid(fieldName: string): boolean {
     const field = this.editForm.get(fieldName);
     return !!(field?.invalid && field.touched);
+  }
+
+  private formatDateForInput(date: Date | string): string {
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    if (!dateObj || isNaN(dateObj.getTime())) return '';
+    
+    // Format as YYYY-MM-DDTHH:mm for datetime-local input
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 }
