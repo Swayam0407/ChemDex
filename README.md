@@ -17,8 +17,12 @@ A full-stack web application for managing and displaying chemical compound infor
 ├── chemical-compound-frontend/     # Angular frontend application
 │   ├── src/
 │   │   ├── app/                   # Angular components and services
+│   │   │   ├── components/        # UI components
+│   │   │   ├── services/          # Angular services
+│   │   │   ├── interceptors/      # HTTP interceptors
+│   │   │   └── periodic-table/    # Periodic table feature
 │   │   ├── environments/          # Environment configurations
-│   │   └── ...
+│   │   └── styles.scss            # Global styles
 │   ├── package.json
 │   └── angular.json
 │
@@ -26,17 +30,27 @@ A full-stack web application for managing and displaying chemical compound infor
 │   ├── src/
 │   │   ├── config/               # Database and app configuration
 │   │   ├── controllers/          # API route handlers
-│   │   ├── models/               # Sequelize models
+│   │   ├── repositories/         # Data access layer
 │   │   ├── routes/               # API routes
 │   │   ├── middleware/           # Custom middleware
+│   │   ├── utils/                # Utility functions
 │   │   └── server.js             # Main server file
+│   ├── data/                     # Database and CSV files
+│   ├── scripts/                  # Database migration scripts
 │   ├── package.json
-│   └── .env                      # Environment variables
+│   ├── .env                      # Environment variables
+│   └── .env.example              # Environment template
 │
-└── .kiro/specs/chemical-compound-manager/  # Project specifications
-    ├── requirements.md
-    ├── design.md
-    └── tasks.md
+├── docker-compose.yml              # Production Docker setup
+├── docker-compose.dev.yml          # Development Docker setup
+├── Dockerfile.backend              # Backend container configuration
+├── Dockerfile.frontend             # Frontend container configuration
+├── nginx.conf                      # Nginx configuration for frontend
+├── docker-setup.sh                 # Automated Docker setup script
+├── Makefile                        # Docker management commands
+├── DOCKER.md                       # Docker documentation
+├── SETUP.md                        # Quick setup guide
+└── README.md                       # Project documentation
 ```
 
 ## Technology Stack
