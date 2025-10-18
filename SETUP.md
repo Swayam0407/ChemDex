@@ -49,7 +49,7 @@ docker-compose down
 #### 1. Clone Repository
 ```bash
 git clone https://github.com/Swayam0407/ChemDx.git
-cd ChemDx
+cd ChemDex
 ```
 
 #### 2. Backend Setup
