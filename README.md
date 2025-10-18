@@ -55,12 +55,35 @@ A full-stack web application for managing and displaying chemical compound infor
 
 ## Getting Started
 
-### Prerequisites
+### 🐳 Docker Deployment (Recommended)
+
+The easiest way to run the application is using Docker:
+
+```bash
+# Quick setup with Docker
+./docker-setup.sh
+```
+
+Or manually:
+```bash
+docker-compose up -d --build
+docker-compose exec backend npm run setup
+```
+
+**Application URLs:**
+- Frontend: http://localhost
+- Backend API: http://localhost:3000
+
+For detailed Docker instructions, see [DOCKER.md](DOCKER.md).
+
+### 💻 Local Development Setup
+
+#### Prerequisites
 - Node.js (v18 or higher)
-- MySQL server
+- MySQL server (optional, SQLite is used by default)
 - npm or yarn package manager
 
-### Backend Setup
+#### Backend Setup
 1. Navigate to the backend directory:
    ```bash
    cd chemical-compound-backend
@@ -82,7 +105,7 @@ A full-stack web application for managing and displaying chemical compound infor
    npm run dev
    ```
 
-### Frontend Setup
+#### Frontend Setup
 1. Navigate to the frontend directory:
    ```bash
    cd chemical-compound-frontend

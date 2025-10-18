@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: chemical-compound-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - USE_SQLITE=true
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - DB_NAME=chemical_compounds
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - JWT_SECRET=SWAYAMLOVESBARCELONA
+      - JWT_EXPIRES_IN=7d
+      - FRONTEND_URL=http://localhost
+    volumes:
+      - ./chemical-compound-backend/data:/app/data
+      - ./chemical-compound-backend/logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - chemical-compound-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: chemical-compound-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - chemical-compound-network
+
+networks:
+  chemical-compound-network:
+    driver: bridge
+
+volumes:
+  backend-data:
+  backend-logs:

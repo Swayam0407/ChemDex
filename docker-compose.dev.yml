@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: chemical-compound-backend-dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - USE_SQLITE=true
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - DB_NAME=chemical_compounds
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - JWT_SECRET=SWAYAMLOVESBARCELONA
+      - JWT_EXPIRES_IN=7d
+      - FRONTEND_URL=http://localhost:4200
+    volumes:
+      - ./chemical-compound-backend:/app
+      - /app/node_modules
+      - ./chemical-compound-backend/data:/app/data
+      - ./chemical-compound-backend/logs:/app/logs
+    command: npm run dev
+    restart: unless-stopped
+    networks:
+      - chemical-compound-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: builder
+    container_name: chemical-compound-frontend-dev
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./chemical-compound-frontend:/app
+      - /app/node_modules
+    command: ng serve --host 0.0.0.0 --port 4200
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - chemical-compound-network
+
+networks:
+  chemical-compound-network:
+    driver: bridge
