@@ -64,7 +64,7 @@ A full-stack web application for managing and displaying chemical compound infor
 ### Backend
 - Node.js with Express.js
 - Sequelize ORM for database operations
-- MySQL database
+- SQLite database (default) with MySQL support
 - CORS for cross-origin requests
 
 ## Getting Started
@@ -94,8 +94,8 @@ For detailed Docker instructions, see [DOCKER.md](DOCKER.md).
 
 #### Prerequisites
 - Node.js (v18 or higher)
-- MySQL server (optional, SQLite is used by default)
 - npm or yarn package manager
+- MySQL server (optional, SQLite is used by default)
 
 #### Backend Setup
 1. Navigate to the backend directory:
@@ -114,7 +114,15 @@ For detailed Docker instructions, see [DOCKER.md](DOCKER.md).
    # Edit .env with your database credentials
    ```
 
-4. Start the development server:
+4. Run database migrations and import CSV data:
+   ```bash
+   npm run setup
+   # Or run individually:
+   # npm run migrate  # Create database tables
+   # npm run import   # Import CSV data (node scripts/importCsv.js)
+   ```
+
+5. Start the development server:
    ```bash
    npm run dev
    ```
@@ -141,11 +149,32 @@ For detailed Docker instructions, see [DOCKER.md](DOCKER.md).
 - Frontend runs on: http://localhost:4200
 - API endpoints: http://localhost:3000/api
 
+## Database Information
+
+### Database Configuration
+- **Default**: SQLite (stored in `chemical-compound-backend/data/database.sqlite`)
+- **Alternative**: MySQL (configure in `.env` file by setting `USE_SQLITE=false`)
+
+### Data Import
+The application includes a CSV file with chemical compound data. To load this data:
+
+```bash
+cd chemical-compound-backend
+node scripts/importCsv.js
+```
+
+Or use the setup command which runs both migration and import:
+```bash
+npm run setup
+```
+
+The CSV data is located at `chemical-compound-backend/data/nuvcompounds.csv` and contains chemical compound information including names, formulas, molecular weights, and other properties.
+
 ## Next Steps
 
-This completes the initial project setup. The next tasks will involve:
-1. Setting up the database schema and models
-2. Implementing API endpoints
-3. Creating Angular components and services
-4. Building the user interface
+This completes the initial project setup. The application includes:
+1. ✅ Database schema and models
+2. ✅ API endpoints for compound management
+3. ✅ Angular components and services
+4. ✅ Complete user interface with periodic table
 

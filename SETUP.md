@@ -63,7 +63,7 @@ npm install
 # Setup environment
 cp .env.example .env
 
-# Run database setup
+# Run database setup (creates tables and imports CSV data)
 npm run setup
 
 # Start backend server
@@ -85,3 +85,24 @@ ng serve
 ### Access Application
 - **Frontend**: http://localhost:4200
 - **Backend API**: http://localhost:3000
+
+## Database Information
+
+### Database Used
+- **Default**: SQLite (file-based database stored in `chemical-compound-backend/data/database.sqlite`)
+- **Alternative**: MySQL (can be configured in `.env` file)
+
+### Loading CSV Data
+The application includes chemical compound data in CSV format. The data is automatically imported during setup, but you can also run it manually:
+
+```bash
+cd chemical-compound-backend
+node scripts/importCsv.js
+```
+
+**Available Scripts:**
+- `npm run setup` - Runs database migration and CSV import
+- `npm run migrate` - Creates database tables only
+- `npm run import` - Imports CSV data only (equivalent to `node scripts/importCsv.js`)
+
+The CSV file is located at `chemical-compound-backend/data/nuvcompounds.csv` and contains comprehensive chemical compound information.
