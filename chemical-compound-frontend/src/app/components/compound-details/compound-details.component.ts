@@ -15,6 +15,7 @@ import { NotificationService } from '../../services/notification.service';
 import { StarredCompoundsService } from '../../services/starred-compounds.service';
 import { AuthService } from '../../services/auth.service';
 import { StarButtonComponent } from '../star-button/star-button.component';
+import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { Compound, ApiError } from '../../models/compound.interface';
 
 @Component({
@@ -146,6 +147,58 @@ export class CompoundDetailsComponent implements OnInit, OnDestroy {
     if (this.compoundId) {
       this.navigationService.navigateToCompoundEdit(this.compoundId);
     }
+  }
+
+  onDeleteClick(): void {
+    // Check if user is admin
+    if (!this.authService.isAdmin()) {
+      // Show admin-only popup
+      this.showAdminOnlyDialog();
+      return;
+    }
+
+    if (!this.compound) {
+      return;
+    }
+
+    // Show delete confirmation dialog
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '450px',
+      disableClose: true,
+      data: { compound: this.compound }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed && this.compound) {
+        this.deleteCompound();
+      }
+    });
+  }
+
+  private deleteCompound(): void {
+    if (!this.compound) {
+      return;
+    }
+
+    this.compoundService.deleteCompound(this.compound.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.notificationService.showSuccess(
+            `${this.compound!.name} has been deleted successfully`,
+            'Dismiss'
+          );
+          // Navigate back to gallery after successful deletion
+          this.navigationService.navigateToGallery();
+        },
+        error: (error) => {
+          console.error('Error deleting compound:', error);
+          this.notificationService.showError(
+            `Failed to delete ${this.compound!.name}. Please try again.`,
+            'Dismiss'
+          );
+        }
+      });
   }
 
   private showAdminOnlyDialog(): void {

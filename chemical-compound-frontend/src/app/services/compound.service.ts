@@ -134,6 +134,29 @@ export class CompoundService {
   }
 
   /**
+   * Delete a compound
+   */
+  deleteCompound(id: number): Observable<{ success: boolean; message: string }> {
+    this.loadingSubject.next(true);
+    
+    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/compounds/${id}`)
+      .pipe(
+        retry(1),
+        tap(() => {
+          // Remove the compound from the cached compounds list
+          const currentCompounds = this.compoundsCache.value;
+          const updatedCompounds = currentCompounds.filter(c => c.id !== id);
+          this.compoundsCache.next(updatedCompounds);
+          this.loadingSubject.next(false);
+        }),
+        catchError(error => {
+          this.loadingSubject.next(false);
+          return this.handleError(error);
+        })
+      );
+  }
+
+  /**
    * Get compounds containing a specific element
    */
   getCompoundsByElement(elementSymbol: string): Observable<Compound[]> {

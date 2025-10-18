@@ -433,6 +433,8 @@ export class CompoundGalleryComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   private handleError(error: ApiError): void {
     this.loading = false;
     this.error = error.message || 'Failed to load compounds';
