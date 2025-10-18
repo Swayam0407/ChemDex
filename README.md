@@ -170,11 +170,4 @@ npm run setup
 
 The CSV data is located at `chemical-compound-backend/data/nuvcompounds.csv` and contains chemical compound information including names, formulas, molecular weights, and other properties.
 
-## Next Steps
-
-This completes the initial project setup. The application includes:
-1. ✅ Database schema and models
-2. ✅ API endpoints for compound management
-3. ✅ Angular components and services
-4. ✅ Complete user interface with periodic table
 
