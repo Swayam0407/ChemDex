@@ -19,8 +19,8 @@ cd ChemDex
 ### Manual Docker Setup
 ```bash
 # Clone the repository
-git clone https://github.com/Swayam0407/ChemDx.git
-cd ChemDx
+git clone https://github.com/Swayam0407/ChemDex.git
+cd ChemDex
 
 # Build and start containers
 docker-compose up -d --build
@@ -48,7 +48,7 @@ docker-compose down
 
 #### 1. Clone Repository
 ```bash
-git clone https://github.com/Swayam0407/ChemDx.git
+git clone https://github.com/Swayam0407/ChemDex.git
 cd ChemDex
 ```
 
