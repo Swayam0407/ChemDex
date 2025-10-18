@@ -55,7 +55,7 @@ A full-stack web application for managing and displaying chemical compound infor
 
 ## Getting Started
 
-### 🐳 Docker Deployment (Recommended)
+### 🐳 Docker Deployment 
 
 The easiest way to run the application is using Docker:
 
